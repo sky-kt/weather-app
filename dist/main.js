@@ -1,0 +1,1 @@
+(async()=>{(await Promise.all([fetch("http://api.openweathermap.org/data/2.5/forecast/?q=Cupertino&units=imperial&appid=daab30e51d1d719de2096678f035d4bf",{mode:"cors"})]))[0].json().then((a=>{console.log(a)}))})();
