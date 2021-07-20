@@ -9,7 +9,6 @@ const makeApiRequests = async () => {
 
     // act upon data
     locationJSON.then((data) => {
-      console.log(data)
       findExtremes(data)
     })
   } catch (err) {
@@ -19,7 +18,6 @@ const makeApiRequests = async () => {
 
 const findExtremes = (data) => {
   const weekArray = data.daily
-  console.log(weekArray)
   const organizedArray = []
   for (const day in weekArray) {
     organizedArray.push({

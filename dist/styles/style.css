@@ -1,0 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+
+h1 {
+  text-align: center;
+  font-family: 'IBM Plex Sans', 'Overpass Mono'
+}
