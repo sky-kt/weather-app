@@ -1,3 +1,5 @@
+import { descriptions } from './descriptions.js'
+
 const makeApiRequests = async () => {
   try {
     const lat = 37.3229978; const lon = -122.0321823
@@ -16,9 +18,12 @@ const makeApiRequests = async () => {
   }
 }
 
+makeApiRequests()
+
 const findExtremes = (data) => {
   const weekArray = data.daily
   const organizedArray = []
+
   for (const day in weekArray) {
     organizedArray.push({
       day,
@@ -28,7 +33,7 @@ const findExtremes = (data) => {
       weatherDes: weekArray[day].weather[0].description
     })
   }
+
+  descriptions.create(organizedArray)
   console.log(organizedArray)
 }
-
-makeApiRequests()
