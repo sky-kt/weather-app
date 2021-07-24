@@ -11,6 +11,7 @@ h1 {
   height: 300px;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  border-radius: 10px;
 }
 
 .indivInfo {
@@ -18,7 +19,11 @@ h1 {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  font-family: 'IBM Plex Sans', 'Overpass Mono'
+  font-family: 'IBM Plex Sans', 'Overpass Mono';
+}
+
+.indivInfo:hover {
+  background-color: rgb(170, 170, 170);
 }
 
 .darkColor {
@@ -32,6 +37,21 @@ h1 {
 .tempDiv {
   width: 100%;
   text-align: center;
+}
+
+.arrow-down {
+  position: absolute;
+  content: '';
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid rgb(170, 170, 170);
+  clear: both;
+  transform: translateY(160px) 
+}
+
+.arrow-down:after {
+  position: absolute;
+  transform: translateX(50px) 
 }
 
 .wi-day-sunny {
