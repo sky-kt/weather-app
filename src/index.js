@@ -1,5 +1,6 @@
 import { descriptions } from './descriptions.js'
 import { date } from './date.js'
+import { apis } from './apis.js'
 
 const findExtremes = (data) => {
   const weekArray = data.daily
@@ -21,22 +22,16 @@ const findExtremes = (data) => {
   descriptions.create(organizedArray)
 }
 
-const makeApiRequests = async (lat, lon) => {
-  try {
-    // make API request to forecast weather (7 days)
-    const locationLink = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=imperial&appid=daab30e51d1d719de2096678f035d4bf`
-    const locationPromise = await fetch(locationLink, { mode: 'cors' })
-    const locationJSON = locationPromise.json()
-
-    // act upon data
-    locationJSON.then((data) => {
-      findExtremes(data)
+(async () => {
+  await apis.getWeather(37.3229978, -122.0321823)
+    .then((value) => {
+      console.log(value)
+      findExtremes(value)
     })
-  } catch (err) {
-    alert(err)
-  }
-}
-makeApiRequests(37.3229978, -122.0321823)
+    .catch((err) => {
+      console.error(err)
+    })
+})()
 
 const indivInfos = document.querySelectorAll('.indivInfo')
 indivInfos.forEach(indivInfo => {

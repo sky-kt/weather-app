@@ -24,6 +24,8 @@ const descriptions = (() => {
           weatherIcon.classList.add('wi', 'wi-day-cloudy')
           break
         default:
+          weatherIcon = document.createElement('i')
+          weatherIcon.classList.add('wi', 'wi-day-cloudy')
           break
       }
       const tempDiv = document.createElement('div')
