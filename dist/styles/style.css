@@ -47,6 +47,8 @@ h1 {
 .tempDiv {
   width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .arrow-down {
@@ -64,13 +66,7 @@ h1 {
   transform: translateX(50px) 
 }
 
-.wi-day-sunny {
-  font-size: 34px;
-  width: 100%;
-  text-align: center;
-}
-
-.wi-day-cloudy {
+.wi {
   font-size: 34px;
   width: 100%;
   text-align: center;
