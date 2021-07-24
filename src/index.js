@@ -39,3 +39,14 @@ const makeApiRequests = async () => {
   }
 }
 makeApiRequests()
+
+document.querySelectorAll('.indivInfo').forEach(indivInfo => {
+  const arrowDown = document.createElement('i')
+  arrowDown.classList.add('arrow-down')
+  indivInfo.addEventListener('mouseover', () => {
+    indivInfo.appendChild(arrowDown)
+  })
+  indivInfo.addEventListener('mouseout', () => {
+    indivInfo.removeChild(arrowDown)
+  })
+})
