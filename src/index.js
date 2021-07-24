@@ -21,10 +21,8 @@ const findExtremes = (data) => {
   descriptions.create(organizedArray)
 }
 
-const makeApiRequests = async () => {
+const makeApiRequests = async (lat, lon) => {
   try {
-    const lat = 37.3229978; const lon = -122.0321823
-
     // make API request to forecast weather (7 days)
     const locationLink = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=imperial&appid=daab30e51d1d719de2096678f035d4bf`
     const locationPromise = await fetch(locationLink, { mode: 'cors' })
@@ -38,9 +36,10 @@ const makeApiRequests = async () => {
     alert(err)
   }
 }
-makeApiRequests()
+makeApiRequests(37.3229978, -122.0321823)
 
-document.querySelectorAll('.indivInfo').forEach(indivInfo => {
+const indivInfos = document.querySelectorAll('.indivInfo')
+indivInfos.forEach(indivInfo => {
   const arrowDown = document.createElement('i')
   arrowDown.classList.add('arrow-down')
   indivInfo.addEventListener('mouseover', () => {
@@ -49,4 +48,11 @@ document.querySelectorAll('.indivInfo').forEach(indivInfo => {
   indivInfo.addEventListener('mouseout', () => {
     indivInfo.removeChild(arrowDown)
   })
+})
+
+const searchContainer = document.getElementById('searchContainer')
+const searchInput = document.getElementById('searchInput')
+searchContainer.addEventListener('submit', (event) => {
+  console.log(searchInput.value)
+  event.preventDefault()
 })
