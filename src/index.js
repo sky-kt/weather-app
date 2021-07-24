@@ -1,4 +1,23 @@
 import { descriptions } from './descriptions.js'
+import { date } from './date.js'
+
+const findExtremes = (data) => {
+  const weekArray = data.daily
+  const organizedArray = []
+
+  for (const day in weekArray) {
+    organizedArray.push({
+      day,
+      dayTemp: weekArray[day].temp.day,
+      nightTemp: weekArray[day].temp.night,
+      weatherVag: weekArray[day].weather[0].main,
+      weatherDes: weekArray[day].weather[0].description
+    })
+  }
+
+  descriptions.create(organizedArray)
+  date.today()
+}
 
 const makeApiRequests = async () => {
   try {
@@ -17,23 +36,4 @@ const makeApiRequests = async () => {
     alert(err)
   }
 }
-
 makeApiRequests()
-
-const findExtremes = (data) => {
-  const weekArray = data.daily
-  const organizedArray = []
-
-  for (const day in weekArray) {
-    organizedArray.push({
-      day,
-      dayTemp: weekArray[day].temp.day,
-      nightTemp: weekArray[day].temp.night,
-      weatherVag: weekArray[day].weather[0].main,
-      weatherDes: weekArray[day].weather[0].description
-    })
-  }
-
-  descriptions.create(organizedArray)
-  console.log(organizedArray)
-}

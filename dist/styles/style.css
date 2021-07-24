@@ -13,10 +13,24 @@ h1 {
   grid-template-columns: repeat(7, 1fr);
 }
 
+.indivInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .darkColor {
   background-color: #cfcfcf;
 }
 
 .lightColor {
   background-color: #dfdfdf;
+}
+
+.wi-day-sunny {
+  font-size: 30px;
+}
+
+.wi-day-cloudy {
+  font-size: 30px;
 }
