@@ -15,6 +15,7 @@ const findExtremes = (data) => {
     })
   }
 
+  console.log(organizedArray)
   descriptions.create(organizedArray)
   date.today()
 }

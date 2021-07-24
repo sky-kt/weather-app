@@ -15,8 +15,9 @@ h1 {
 
 .indivInfo {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .darkColor {
@@ -27,10 +28,19 @@ h1 {
   background-color: #dfdfdf;
 }
 
+.tempDiv {
+  width: 100%;
+  text-align: center;
+}
+
 .wi-day-sunny {
   font-size: 30px;
+  width: 100%;
+  text-align: center;
 }
 
 .wi-day-cloudy {
   font-size: 30px;
+  width: 100%;
+  text-align: center;
 }
