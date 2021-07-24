@@ -4,8 +4,11 @@ const descriptions = (() => {
     console.log('creating')
     for (let item = 0; item < extremeArray.length - 1; item++) {
       // access variables from array
+
       const indivInfo = Array.from(infoContainer.children)[item]
+      const dateNumber = extremeArray[item].dateNumber
       const weatherDescription = extremeArray[item].weatherVag
+
       const dayTemp = Math.round(extremeArray[item].dayTemp)
       const nightTemp = Math.round(extremeArray[item].nightTemp)
       let weatherIcon
@@ -27,10 +30,9 @@ const descriptions = (() => {
       tempDiv.classList.add('tempDiv')
       tempDiv.appendChild(document.createTextNode(`${dayTemp}/${nightTemp}`))
 
-      indivInfo.appendChild(document.createTextNode('sus'))
+      indivInfo.appendChild(document.createTextNode(dateNumber))
       indivInfo.appendChild(weatherIcon)
       indivInfo.appendChild(tempDiv)
-      console.log(indivInfo)
     }
   }
   return { create }

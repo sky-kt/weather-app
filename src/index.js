@@ -6,8 +6,10 @@ const findExtremes = (data) => {
   const organizedArray = []
 
   for (const day in weekArray) {
+    const dayArray = date.futureDate(parseInt(day))
     organizedArray.push({
-      day,
+      dayName: dayArray[0],
+      dateNumber: dayArray[1],
       dayTemp: weekArray[day].temp.day,
       nightTemp: weekArray[day].temp.night,
       weatherVag: weekArray[day].weather[0].main,
@@ -17,7 +19,6 @@ const findExtremes = (data) => {
 
   console.log(organizedArray)
   descriptions.create(organizedArray)
-  date.today()
 }
 
 const makeApiRequests = async () => {

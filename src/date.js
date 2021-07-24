@@ -1,17 +1,20 @@
 const date = (() => {
   console.log('finding datestuffs')
 
-  const today = () => {
+  const futureDate = (idx) => {
+    // find current date
     const today = new Date()
-    const todayDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`
-    console.log(todayDate)
+    const tomorrow = new Date(today)
+    const newDayNumber = tomorrow.getDate() + idx
+    tomorrow.setDate(newDayNumber)
+
+    // find current day name
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    const currentDayNumber = dayNames[tomorrow.getDay()]
+    return [currentDayNumber, `${tomorrow.getMonth() + 1}/${tomorrow.getDate()}`]
   }
 
-  const appendDates = () => {
-
-  }
-
-  return { today }
+  return { futureDate }
 })()
 
 export { date }
