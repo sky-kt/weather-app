@@ -54,6 +54,18 @@ const retrieveCoordInfo = async (city, country, state = 'none') => {
     })
 }
 
+const updateScreen = async (city, country, state = 'none') => {
+  if (country === 'US') {
+    retrieveCoordInfo(city, country, state)
+    descriptions.updateToday(city, country, state)
+    retrieveWeatherNow(city, country, state)
+  } else {
+    retrieveCoordInfo(city, country)
+    descriptions.updateToday(city, country)
+    retrieveWeatherNow(city, country)
+  }
+}
+
 const indivInfos = document.querySelectorAll('.indivInfo')
 indivInfos.forEach(indivInfo => {
   const arrowDown = document.createElement('i')
@@ -72,16 +84,11 @@ searchContainer.addEventListener('submit', (event) => {
   event.preventDefault()
   const locationArr = searchInput.value.split(', ')
   if (locationArr.length === 3) {
-    retrieveCoordInfo(locationArr[0], locationArr[2], locationArr[1])
-    descriptions.updateToday(locationArr[0], locationArr[2], locationArr[1])
-    retrieveWeatherNow(locationArr[0], locationArr[2], locationArr[1])
+    updateScreen(locationArr[0], locationArr[2], locationArr[1])
   } else {
-    retrieveCoordInfo(locationArr[0], locationArr[1])
-    descriptions.updateToday(locationArr[0], locationArr[1])
-    retrieveWeatherNow(locationArr[0], locationArr[1])
+    updateScreen(locationArr[0], locationArr[1])
   }
   searchInput.value = ''
 })
 
-retrieveCoordInfo('London', 'GB')
-descriptions.updateToday('London', 'GB')
+updateScreen('London', 'GB')
