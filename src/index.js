@@ -57,38 +57,42 @@ const retrieveCoordInfo = async (city, country, state = 'none') => {
 const updateScreen = async (city, country, state = 'none') => {
   if (country === 'US') {
     retrieveCoordInfo(city, country, state)
-    descriptions.updateToday(city, country, state)
     retrieveWeatherNow(city, country, state)
   } else {
     retrieveCoordInfo(city, country)
-    descriptions.updateToday(city, country)
     retrieveWeatherNow(city, country)
   }
 }
 
-const indivInfos = document.querySelectorAll('.indivInfo')
-indivInfos.forEach(indivInfo => {
-  const arrowDown = document.createElement('i')
-  arrowDown.classList.add('arrow-down')
-  indivInfo.addEventListener('mouseover', () => {
-    indivInfo.appendChild(arrowDown)
+// activate indivInfos
+(() => {
+  const indivInfos = document.querySelectorAll('.indivInfo')
+  indivInfos.forEach(indivInfo => {
+    const arrowDown = document.createElement('i')
+    arrowDown.classList.add('arrow-down')
+    indivInfo.addEventListener('mouseover', () => {
+      indivInfo.appendChild(arrowDown)
+    })
+    indivInfo.addEventListener('mouseout', () => {
+      indivInfo.removeChild(arrowDown)
+    })
   })
-  indivInfo.addEventListener('mouseout', () => {
-    indivInfo.removeChild(arrowDown)
-  })
-})
+})();
 
-const searchContainer = document.getElementById('searchContainer')
-const searchInput = document.getElementById('searchInput')
-searchContainer.addEventListener('submit', (event) => {
-  event.preventDefault()
-  const locationArr = searchInput.value.split(', ')
-  if (locationArr.length === 3) {
-    updateScreen(locationArr[0], locationArr[2], locationArr[1])
-  } else {
-    updateScreen(locationArr[0], locationArr[1])
-  }
-  searchInput.value = ''
-})
+// activate search (what to do on submit)
+(() => {
+  const searchContainer = document.getElementById('searchContainer')
+  const searchInput = document.getElementById('searchInput')
+  searchContainer.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const locationArr = searchInput.value.split(', ')
+    if (locationArr.length === 3) {
+      updateScreen(locationArr[0], locationArr[2], locationArr[1])
+    } else {
+      updateScreen(locationArr[0], locationArr[1])
+    }
+    searchInput.value = ''
+  })
+})()
 
 updateScreen('London', 'GB')
