@@ -10,16 +10,16 @@ const descriptions = (() => {
     }
   }
 
-  const updateToday = (city, country, state = 'none') => {
+  const updateToday = (temp, city, country, state = 'none') => {
     removeAllChildren(cityTitle)
     removeAllChildren(weatherTitle)
 
     if (country === 'US') {
       cityTitle.appendChild(document.createTextNode(`${city}, ${state}`))
-      weatherTitle.appendChild(document.createTextNode('placeholder'))
+      weatherTitle.appendChild(document.createTextNode(temp))
     } else {
       cityTitle.appendChild(document.createTextNode(`${city}, ${country}`))
-      weatherTitle.appendChild(document.createTextNode('placeholder'))
+      weatherTitle.appendChild(document.createTextNode(temp))
     }
   }
 

@@ -28,9 +28,9 @@ const apis = (() => {
   const getWeatherNow = async (city, country, state) => {
     let coordLink
     if (country === 'US') {
-      coordLink = `http://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&appid=daab30e51d1d719de2096678f035d4bf`
+      coordLink = `http://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&units=imperial&appid=daab30e51d1d719de2096678f035d4bf`
     } else {
-      coordLink = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=daab30e51d1d719de2096678f035d4bf`
+      coordLink = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=imperial&appid=daab30e51d1d719de2096678f035d4bf`
     }
     try {
       const weatherPromise = await fetch(coordLink, { mode: 'cors' })

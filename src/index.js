@@ -25,7 +25,8 @@ const findExtremes = async (data) => {
 const retrieveWeatherNow = async (city, country, state = 'none') => {
   await apis.getWeatherNow(city, country, state)
     .then((value) => {
-      console.log('retrieving weather now', value)
+      const temp = value.main.temp
+      descriptions.updateToday(temp, city, country, state)
     })
     .catch((err) => {
       console.error(err)
@@ -73,9 +74,11 @@ searchContainer.addEventListener('submit', (event) => {
   if (locationArr.length === 3) {
     retrieveCoordInfo(locationArr[0], locationArr[2], locationArr[1])
     descriptions.updateToday(locationArr[0], locationArr[2], locationArr[1])
+    retrieveWeatherNow(locationArr[0], locationArr[2], locationArr[1])
   } else {
     retrieveCoordInfo(locationArr[0], locationArr[1])
     descriptions.updateToday(locationArr[0], locationArr[1])
+    retrieveWeatherNow(locationArr[0], locationArr[1])
   }
   searchInput.value = ''
 })
