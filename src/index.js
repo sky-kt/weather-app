@@ -22,6 +22,16 @@ const findExtremes = async (data) => {
   descriptions.create(organizedArray)
 }
 
+const retrieveWeatherNow = async (city, country, state = 'none') => {
+  await apis.getWeatherNow(city, country, state)
+    .then((value) => {
+      console.log('retrieving weather now', value)
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
 const retrieveWeatherInfo = async (lat, lon) => {
   await apis.getWeather(lat, lon)
     .then((value) => {
@@ -31,12 +41,11 @@ const retrieveWeatherInfo = async (lat, lon) => {
       console.error(err)
     })
 }
-// retrieveWeatherInfo(37.3229978, -122.0321823)
-retrieveWeatherInfo(37.323, -122.032)
 
 const retrieveCoordInfo = async (city, country, state = 'none') => {
   await apis.getCoordinates(city, country, state)
     .then((value) => {
+      console.log(value[0])
       retrieveWeatherInfo(value[0].lat, value[0].lon)
     })
     .catch((err) => {
@@ -59,11 +68,17 @@ indivInfos.forEach(indivInfo => {
 const searchContainer = document.getElementById('searchContainer')
 const searchInput = document.getElementById('searchInput')
 searchContainer.addEventListener('submit', (event) => {
+  event.preventDefault()
   const locationArr = searchInput.value.split(', ')
   if (locationArr.length === 3) {
     retrieveCoordInfo(locationArr[0], locationArr[2], locationArr[1])
+    descriptions.updateToday(locationArr[0], locationArr[2], locationArr[1])
   } else {
-    retrieveCoordInfo(locationArr[0], locationArr[2])
+    retrieveCoordInfo(locationArr[0], locationArr[1])
+    descriptions.updateToday(locationArr[0], locationArr[1])
   }
-  event.preventDefault()
+  searchInput.value = ''
 })
+
+retrieveCoordInfo('London', 'GB')
+descriptions.updateToday('London', 'GB')

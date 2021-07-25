@@ -1,17 +1,37 @@
 const descriptions = (() => {
   const infoContainer = document.getElementById('infoContainer')
+  const cityTitle = document.getElementById('cityTitle')
+  const weatherTitle = document.getElementById('weatherTitle')
+  const indivInfos = document.querySelectorAll('.indivInfo')
+
+  const removeAllChildren = (parent) => {
+    while (parent.lastChild) {
+      parent.removeChild(parent.lastChild)
+    }
+  }
+
+  const updateToday = (city, country, state = 'none') => {
+    removeAllChildren(cityTitle)
+    removeAllChildren(weatherTitle)
+
+    if (country === 'US') {
+      cityTitle.appendChild(document.createTextNode(`${city}, ${state}`))
+      weatherTitle.appendChild(document.createTextNode('placeholder'))
+    } else {
+      cityTitle.appendChild(document.createTextNode(`${city}, ${country}`))
+      weatherTitle.appendChild(document.createTextNode('placeholder'))
+    }
+  }
+
   const remove = () => {
-    document.querySelectorAll('.indivInfo').forEach((indivInfo) => {
-      while (indivInfo.lastChild) {
-        indivInfo.removeChild(indivInfo.lastChild)
-      }
+    indivInfos.forEach((indivInfo) => {
+      removeAllChildren(indivInfo)
     })
   }
 
   const create = (extremeArray) => {
     for (let item = 0; item < extremeArray.length - 1; item++) {
       // access variables from array
-
       const indivInfo = Array.from(infoContainer.children)[item]
       const dateNumber = extremeArray[item].dateNumber
       const weatherVag = extremeArray[item].weatherVag
@@ -80,7 +100,7 @@ const descriptions = (() => {
       indivInfo.appendChild(tempDiv)
     }
   }
-  return { create, remove }
+  return { updateToday, create, remove }
 })()
 
 export { descriptions }
