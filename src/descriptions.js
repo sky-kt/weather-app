@@ -12,17 +12,17 @@ const descriptions = (() => {
     }
   }
 
-  const updateToday = (temp, city, country, state = 'none') => {
+  const updateToday = (temp, city, country, state) => {
     removeAllChildren(cityTitle)
     removeAllChildren(weatherTitle)
 
     city = city.charAt(0).toUpperCase() + city.slice(1)
-    country = country.toUpperCase()
-    state = state.toUpperCase()
 
     if (country === 'US') {
+      state = state.toUpperCase()
       cityTitle.appendChild(document.createTextNode(`${city}, ${state}`))
     } else {
+      country = country.toUpperCase()
       cityTitle.appendChild(document.createTextNode(`${city}, ${country}`))
     }
     weatherTitle.appendChild(document.createTextNode(`${temp} F°`))

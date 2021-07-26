@@ -24,7 +24,7 @@ const findExtremes = async (data) => {
   return organizedArray
 }
 
-const retrieveWeatherNow = async (city, country, state = 'none') => {
+const retrieveWeatherNow = async (city, country, state) => {
   try {
     const value = await apis.getWeatherNow(city, country, state)
     return value.main.temp
@@ -42,7 +42,7 @@ const retrieveWeatherInfo = async (lat, lon) => {
   }
 }
 
-const retrieveCoordInfo = async (city, country, state = 'none') => {
+const retrieveCoordInfo = async (city, country, state) => {
   try {
     const value = await apis.getCoordinates(city, country, state)
     return [value[0].lat, value[0].lon]
@@ -51,16 +51,16 @@ const retrieveCoordInfo = async (city, country, state = 'none') => {
   }
 }
 
-const updateScreen = async (city, country, state = 'none') => {
+const updateScreen = async (city, country, state) => {
   try {
     const coords = await retrieveCoordInfo(city, country, state)
     const rawWeather = await retrieveWeatherInfo(coords[0], coords[1])
     const organizedArray = await findExtremes(rawWeather)
     const weatherNow = await retrieveWeatherNow(city, country, state)
 
+    descriptions.updateToday(weatherNow, city, country, state)
     descriptions.remove('infoContainer')
     descriptions.create(organizedArray)
-    descriptions.updateToday(weatherNow, city, country, state)
   } catch (err) {
     console.error('err', err)
   }
@@ -95,13 +95,12 @@ const updateScreen = async (city, country, state = 'none') => {
     const locationArr = searchInput.value.split('/')
     const termAmt = locationArr.length
     if (termAmt === 3 || termAmt === 2) {
-      if (locationArr.length === 3) {
+      if (termAmt === 3) {
         updateScreen(locationArr[0], locationArr[2], locationArr[1])
-        searchInput.value = ''
-      } else if (locationArr.length === 2) {
+      } else {
         updateScreen(locationArr[0], locationArr[1])
-        searchInput.value = ''
       }
+      searchInput.value = ''
     } else {
       if (termAmt > 3) {
         searchInput.setCustomValidity('3 inputs max.')
