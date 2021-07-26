@@ -34,34 +34,40 @@ const retrieveWeatherNow = async (city, country, state = 'none') => {
 }
 
 const retrieveWeatherInfo = async (lat, lon) => {
-  await apis.getWeather(lat, lon)
-    .then((value) => {
-      findExtremes(value)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  try {
+    const rawWeather = await apis.getWeather(lat, lon)
+    return rawWeather
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const retrieveCoordInfo = async (city, country, state = 'none') => {
-  await apis.getCoordinates(city, country, state)
-    .then((value) => {
-      console.log(value[0])
-      retrieveWeatherInfo(value[0].lat, value[0].lon)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  try {
+    const value = await apis.getCoordinates(city, country, state)
+    return [value[0].lat, value[0].lon]
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 const updateScreen = async (city, country, state = 'none') => {
-  if (country === 'US') {
-    retrieveCoordInfo(city, country, state)
-    retrieveWeatherNow(city, country, state)
-  } else {
-    retrieveCoordInfo(city, country)
-    retrieveWeatherNow(city, country)
+  try {
+    const coords = await retrieveCoordInfo(city, country, state)
+    try {
+      const rawWeather = await retrieveWeatherInfo(coords[0], coords[1])
+      try {
+        await findExtremes(rawWeather)
+      } catch (err) {
+        console.err(err)
+      }
+    } catch (err) {
+      console.err(err)
+    }
+  } catch (err) {
+    console.err(err)
   }
+  await retrieveWeatherNow(city, country, state)
 }
 
 // activate indivInfos
