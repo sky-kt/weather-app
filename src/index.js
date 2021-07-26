@@ -26,7 +26,7 @@ const retrieveWeatherNow = async (city, country, state = 'none') => {
     const value = await apis.getWeatherNow(city, country, state)
     return value.main.temp
   } catch (err) {
-    console.error('err')
+    Promise.reject(err)
   }
 }
 
@@ -35,7 +35,7 @@ const retrieveWeatherInfo = async (lat, lon) => {
     const rawWeather = await apis.getWeather(lat, lon)
     return rawWeather
   } catch (err) {
-    console.error(err)
+    Promise.reject(err)
   }
 }
 
@@ -44,7 +44,7 @@ const retrieveCoordInfo = async (city, country, state = 'none') => {
     const value = await apis.getCoordinates(city, country, state)
     return [value[0].lat, value[0].lon]
   } catch (err) {
-    console.error(err)
+    Promise.reject(err)
   }
 }
 
@@ -59,7 +59,7 @@ const updateScreen = async (city, country, state = 'none') => {
     descriptions.create(organizedArray)
     descriptions.updateToday(weatherNow, city, country, state)
   } catch (err) {
-    console.error(err)
+    console.error('err', err)
   }
 }
 

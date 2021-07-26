@@ -4,9 +4,9 @@ const apis = (() => {
     try {
       const locationPromise = await fetch(locationLink, { mode: 'cors' })
       const locationJSON = await locationPromise.json()
-      return new Promise((resolve, reject) => resolve(locationJSON))
+      return locationJSON
     } catch (err) {
-      return new Promise((resolve, reject) => reject(err))
+      Promise.reject(err)
     }
   }
   const getCoordinates = async (city, country, state) => {
@@ -20,9 +20,9 @@ const apis = (() => {
     try {
       const coordPromise = await fetch(coordLink, { mode: 'cors' })
       const coordJSON = await coordPromise.json()
-      return new Promise((resolve, reject) => resolve(coordJSON))
+      return coordJSON
     } catch (err) {
-      return new Promise((resolve, reject) => reject(err))
+      Promise.reject(err)
     }
   }
   const getWeatherNow = async (city, country, state) => {
@@ -35,9 +35,9 @@ const apis = (() => {
     try {
       const weatherPromise = await fetch(coordLink, { mode: 'cors' })
       const weatherJSON = await weatherPromise.json()
-      return new Promise((resolve, reject) => resolve(weatherJSON))
+      return weatherJSON
     } catch (err) {
-      return new Promise((resolve, reject) => reject(err))
+      Promise.reject(err)
     }
   }
   return { getWeather, getCoordinates, getWeatherNow }
