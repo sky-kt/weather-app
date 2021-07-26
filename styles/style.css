@@ -26,12 +26,26 @@ h1 {
   justify-content: space-around;
 }
 
+#expandedContainer {
+  width: 100%;
+  background-color: #cfcfcf;
+  height: 100px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'IBM Plex Sans', 'Overpass Mono';
+  font-size: 17px;
+}
+
 #cityTitle {
   font-family: 'IBM Plex Sans', 'Overpass Mono';
+  font-size: 17px;
 }
 
 #weatherTitle {
   font-family: 'IBM Plex Sans', 'Overpass Mono';
+  font-size: 17px;
 }
 
 #infoContainer {
