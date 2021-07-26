@@ -93,17 +93,21 @@ const updateScreen = async (city, country, state = 'none') => {
   searchContainer.addEventListener('submit', (event) => {
     event.preventDefault()
     const locationArr = searchInput.value.split('/')
-    console.log(locationArr)
-    if (locationArr.length === 3) {
-      updateScreen(locationArr[0], locationArr[2], locationArr[1])
-      searchInput.value = ''
-    } else if (locationArr.length === 2) {
-      updateScreen(locationArr[0], locationArr[1])
-      searchInput.value = ''
-    } else if (locationArr.length > 3) {
-      searchInput.setCustomValidity('Enter three inputs at max.')
+    const termAmt = locationArr.length
+    if (termAmt === 3 || termAmt === 2) {
+      if (locationArr.length === 3) {
+        updateScreen(locationArr[0], locationArr[2], locationArr[1])
+        searchInput.value = ''
+      } else if (locationArr.length === 2) {
+        updateScreen(locationArr[0], locationArr[1])
+        searchInput.value = ''
+      }
     } else {
-      searchInput.setCustomValidity('Enter two inputs at min.')
+      if (termAmt > 3) {
+        searchInput.setCustomValidity('3 inputs max.')
+      } else {
+        searchInput.setCustomValidity('2 inputs min.')
+      }
     }
   })
 })()
