@@ -1,8 +1,10 @@
 const descriptions = (() => {
+  const indivInfos = document.querySelectorAll('.indivInfo')
   const infoContainer = document.getElementById('infoContainer')
+  const expandedContainer = document.getElementById('expandedContainer')
+
   const cityTitle = document.getElementById('cityTitle')
   const weatherTitle = document.getElementById('weatherTitle')
-  const indivInfos = document.querySelectorAll('.indivInfo')
 
   const removeAllChildren = (parent) => {
     while (parent.lastChild) {
@@ -14,19 +16,31 @@ const descriptions = (() => {
     removeAllChildren(cityTitle)
     removeAllChildren(weatherTitle)
 
+    city = city.charAt(0).toUpperCase() + city.slice(1)
+    country = country.toUpperCase()
+    state = state.toUpperCase()
+
     if (country === 'US') {
       cityTitle.appendChild(document.createTextNode(`${city}, ${state}`))
-      weatherTitle.appendChild(document.createTextNode(temp))
     } else {
       cityTitle.appendChild(document.createTextNode(`${city}, ${country}`))
-      weatherTitle.appendChild(document.createTextNode(temp))
     }
+    weatherTitle.appendChild(document.createTextNode(`${temp} F°`))
   }
 
-  const remove = () => {
-    indivInfos.forEach((indivInfo) => {
-      removeAllChildren(indivInfo)
-    })
+  const updateExpanded = (weatherDes) => {
+    const sentenceDescription = weatherDes.charAt(0).toUpperCase() + weatherDes.slice(1)
+    expandedContainer.appendChild(document.createTextNode(sentenceDescription))
+  }
+
+  const remove = (target) => {
+    if (target === 'infoContainer') {
+      indivInfos.forEach((indivInfo) => {
+        removeAllChildren(indivInfo)
+      })
+    } else if (target === 'expandedContainer') {
+      removeAllChildren(expandedContainer)
+    }
   }
 
   const create = (extremeArray) => {
@@ -50,13 +64,17 @@ const descriptions = (() => {
           weatherIcon.classList.add('wi', 'wi-showers')
           break
         case 'Rain':
-          weatherIcon.classList.add('wi', 'wi-rain')
+          if (weatherDes === 'light rain') {
+            weatherIcon.classList.add('wi', 'wi-showers')
+          } else {
+            weatherIcon.classList.add('wi', 'wi-rain')
+          }
           break
         case 'Clear':
           weatherIcon.classList.add('wi', 'wi-day-sunny')
           break
         case 'Clouds':
-          if (weatherDes === 'scattered clouds') {
+          if (weatherDes === 'broken clouds') {
             weatherIcon.classList.add('wi', 'wi-cloudy')
           } else {
             weatherIcon.classList.add('wi', 'wi-day-cloudy')
@@ -100,7 +118,7 @@ const descriptions = (() => {
       indivInfo.appendChild(tempDiv)
     }
   }
-  return { updateToday, create, remove }
+  return { updateToday, updateExpanded, create, remove }
 })()
 
 export { descriptions }

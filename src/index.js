@@ -2,6 +2,8 @@ import { descriptions } from './descriptions.js'
 import { date } from './date.js'
 import { apis } from './apis.js'
 
+let sortedWeatherArray
+
 const findExtremes = async (data) => {
   const weekArray = data.daily
   const organizedArray = []
@@ -18,6 +20,7 @@ const findExtremes = async (data) => {
     })
   }
 
+  sortedWeatherArray = organizedArray
   return organizedArray
 }
 
@@ -55,7 +58,7 @@ const updateScreen = async (city, country, state = 'none') => {
     const organizedArray = await findExtremes(rawWeather)
     const weatherNow = await retrieveWeatherNow(city, country, state)
 
-    descriptions.remove()
+    descriptions.remove('infoContainer')
     descriptions.create(organizedArray)
     descriptions.updateToday(weatherNow, city, country, state)
   } catch (err) {
@@ -71,6 +74,11 @@ const updateScreen = async (city, country, state = 'none') => {
     arrowDown.classList.add('arrow-down')
     indivInfo.addEventListener('mouseover', () => {
       indivInfo.appendChild(arrowDown)
+      const idx = Array.from(indivInfo.parentNode.children).indexOf(indivInfo)
+      const weatherDes = sortedWeatherArray[idx].weatherDes
+
+      descriptions.remove('expandedContainer')
+      descriptions.updateExpanded(weatherDes)
     })
     indivInfo.addEventListener('mouseout', () => {
       indivInfo.removeChild(arrowDown)
@@ -84,13 +92,19 @@ const updateScreen = async (city, country, state = 'none') => {
   const searchInput = document.getElementById('searchInput')
   searchContainer.addEventListener('submit', (event) => {
     event.preventDefault()
-    const locationArr = searchInput.value.split(', ')
+    const locationArr = searchInput.value.split('/')
+    console.log(locationArr)
     if (locationArr.length === 3) {
       updateScreen(locationArr[0], locationArr[2], locationArr[1])
-    } else {
+      searchInput.value = ''
+    } else if (locationArr.length === 2) {
       updateScreen(locationArr[0], locationArr[1])
+      searchInput.value = ''
+    } else if (locationArr.length > 3) {
+      searchInput.setCustomValidity('Enter three inputs at max.')
+    } else {
+      searchInput.setCustomValidity('Enter two inputs at min.')
     }
-    searchInput.value = ''
   })
 })()
 
