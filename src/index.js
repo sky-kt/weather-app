@@ -17,20 +17,17 @@ const findExtremes = async (data) => {
       weatherDes: weekArray[day].weather[0].description
     })
   }
-  console.log(organizedArray)
-  descriptions.remove()
-  descriptions.create(organizedArray)
+
+  return organizedArray
 }
 
 const retrieveWeatherNow = async (city, country, state = 'none') => {
-  await apis.getWeatherNow(city, country, state)
-    .then((value) => {
-      const temp = value.main.temp
-      descriptions.updateToday(temp, city, country, state)
-    })
-    .catch((err) => {
-      console.error(err)
-    })
+  try {
+    const value = await apis.getWeatherNow(city, country, state)
+    return value.main.temp
+  } catch (err) {
+    console.error('err')
+  }
 }
 
 const retrieveWeatherInfo = async (lat, lon) => {
@@ -54,20 +51,16 @@ const retrieveCoordInfo = async (city, country, state = 'none') => {
 const updateScreen = async (city, country, state = 'none') => {
   try {
     const coords = await retrieveCoordInfo(city, country, state)
-    try {
-      const rawWeather = await retrieveWeatherInfo(coords[0], coords[1])
-      try {
-        await findExtremes(rawWeather)
-      } catch (err) {
-        console.err(err)
-      }
-    } catch (err) {
-      console.err(err)
-    }
+    const rawWeather = await retrieveWeatherInfo(coords[0], coords[1])
+    const organizedArray = await findExtremes(rawWeather)
+    const weatherNow = await retrieveWeatherNow(city, country, state)
+
+    descriptions.remove()
+    descriptions.create(organizedArray)
+    descriptions.updateToday(weatherNow, city, country, state)
   } catch (err) {
-    console.err(err)
+    console.error(err)
   }
-  await retrieveWeatherNow(city, country, state)
 }
 
 // activate indivInfos
